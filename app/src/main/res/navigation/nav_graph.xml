@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.notekar.FirstFragment"
+        android:name="com.notekar.ListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -17,9 +17,8 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.notekar.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:name="com.notekar.AddNoteFragment"
+        android:label="@string/second_fragment_label">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:padding="10dp"
+            android:hint="@string/title_hint"
+            android:textColor="@color/black"
+            android:textSize="21sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/textColorGray"
+            android:padding="10dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tvBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:padding="10dp"
+            android:hint="@string/message_hint"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
