@@ -11,4 +11,5 @@ object Constants {
     const val topic_body = "message"
     const val date = "date"
     const val time = "time"
+    const val arg_note = "notes"
 }

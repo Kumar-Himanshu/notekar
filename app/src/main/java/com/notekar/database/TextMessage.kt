@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.notekar.utils.Constants
+import java.io.Serializable
 
 
 /**
@@ -17,4 +18,4 @@ data class TextMessage(
     @ColumnInfo(name = Constants.topic_body) val body: String?,
     @ColumnInfo(name = Constants.date) val date: String?,
     @ColumnInfo(name = Constants.time) val time: String?
-)
+): Serializable

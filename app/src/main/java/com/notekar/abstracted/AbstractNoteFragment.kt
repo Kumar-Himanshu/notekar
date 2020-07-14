@@ -1,14 +1,14 @@
 package com.notekar.abstracted
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.notekar.R
+import kotlinx.android.synthetic.main.abstract_base_fragment.*
 
 
 /**
@@ -17,7 +17,10 @@ import com.notekar.R
  */
 abstract class AbstractNoteFragment : Fragment() {
 
-    abstract fun getSaveData()
+    abstract fun saveData()
+    abstract fun deleteData()
+    abstract fun cancelData()
+    abstract fun getScreenTitle(): Int
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,31 +30,43 @@ abstract class AbstractNoteFragment : Fragment() {
         return inflater.inflate(R.layout.abstract_base_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        requireActivity().setTitle(getScreenTitle())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                true}
-            R.id.action_cancel -> true
-            R.id.action_delete -> true
-            R.id.action_save -> {
-             getSaveData()
+            R.id.action_cancel -> {
+                cancelData()
                 true
             }
-            R.id.action_share -> true
+            R.id.action_delete -> {
+                deleteData()
+                true
+            }
+            R.id.action_save -> {
+                saveData()
+                true
+            }
+            R.id.action_text -> {
+                shareViaText()
+                true
+            }
+            R.id.action_image -> {
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun saveData(){
-
+    private fun shareViaText() {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, tvBody.text.toString())
+        sendIntent.type = "text/plain"
+        Intent.createChooser(sendIntent, "Share via")
+        startActivity(sendIntent)
     }
 }

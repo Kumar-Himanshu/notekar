@@ -4,6 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Notes</string>
     <string name="second_fragment_label">Add Notes</string>
+    <string name="third_fragment_label">Edit Notes</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -15,6 +16,8 @@
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="action_share">Share</string>
+    <string name="action_text">As Text</string>
+    <string name="action_image">As Image</string>
     <string name="alert_action_message">Are you sure you want to %1$s this</string>
     <string name="cancel_success_message">You have cancelled this action successfully</string>
     <string name="delete_success_message">This item deleted this successfully</string>

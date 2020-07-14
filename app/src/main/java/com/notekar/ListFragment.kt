@@ -1,24 +1,34 @@
 package com.notekar
 
-import android.os.AsyncTask
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.notekar.adapter.ListNoteAdapter
 import com.notekar.database.AppDataBase
-import kotlinx.android.synthetic.main.fragment_first.*
+import com.notekar.database.TextMessage
+import com.notekar.utils.Constants
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
 
 /**
+ * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
+ * Copyright (c) 2020 USTech Solutions. All rights reserved.
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), ListNoteAdapter.onRowClick {
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var mListNotes: RecyclerView
     private lateinit var adapter: ListNoteAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,46 +40,67 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        activity!!.actionBar!!.hide()
-        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        initUI(view)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        AsyncTask.execute { // Fetch Data in async method because Room not allowed data access over main ui
-            val list = AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().getAll()
-            if (list.isEmpty()) {
-
-            } else {
-                linearLayoutManager = LinearLayoutManager(activity)
-                listNotes.layoutManager = linearLayoutManager
-                adapter = ListNoteAdapter(list, findNavController())
-                listNotes.adapter = adapter
-            }
-        }
-//        }
-//        lifecycleScope.launch {
-//            val list = AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().getAll()
-//            if (list.isEmpty()) {
-//
-//            } else {
-//                linearLayoutManager = LinearLayoutManager(activity)
-//                listNotes.layoutManager = linearLayoutManager
-//                adapter = ListNoteAdapter(list, findNavController())
-//                listNotes.adapter = adapter
-//            }
-//        }
+        requireActivity().setTitle(R.string.first_fragment_label)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+        //removing menu options from toolbar
         menu.findItem(R.id.action_delete).isVisible = false
         menu.findItem(R.id.action_cancel).isVisible = false
         menu.findItem(R.id.action_save).isVisible = false
         menu.findItem(R.id.action_share).isVisible = false
-        menu.findItem(R.id.action_settings).isVisible = false
+    }
+
+    @SuppressLint("CheckResult")
+    private fun fetchData() {
+        Observable.fromCallable {
+            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().getAll()
+        }.subscribeOn(
+            io()
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            if (it.isNotEmpty()) {
+                adapter = ListNoteAdapter(it, this)
+                mListNotes.adapter = adapter
+            }
+        }
+    }
+
+    private fun initUI(view: View) {
+        mListNotes = view.findViewById(R.id.listNotes)
+        linearLayoutManager = LinearLayoutManager(activity)
+        mListNotes.layoutManager = linearLayoutManager
+        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+        fetchData()
+
+    }
+
+    override fun onItemClicked(note: TextMessage) {
+        val action = ListFragmentDirections.actionFirstFragmentToThirdFragment(note)
+        findNavController().navigate(action)
+    }
+
+    override fun onClickDelete(note: TextMessage) {
+        delete(note)
+    }
+
+    @SuppressLint("CheckResult")
+    private fun delete(note: TextMessage) {
+        Observable.fromCallable {
+            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao()
+                .deleteById(note.date!!, note.time!!)
+        }.subscribeOn(
+            Schedulers.io()
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            fetchData()
+        }
     }
 }

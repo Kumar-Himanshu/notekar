@@ -29,4 +29,14 @@ interface TextMessageDao {
     //update db
     @Update
     fun update(user: TextMessage)
+
+    @Query("UPDATE " + Constants.tableName + " SET " + Constants.topic_title + " = :title," + Constants.topic_body + " = :body," + Constants.date + " = :newDate," + Constants.time + " = :newTime WHERE " + Constants.date + " =:previousDate AND " + Constants.time + "=:previousTime")
+    fun updateSingleData(
+        title: String,
+        body: String?,
+        previousDate: String?,
+        previousTime: String?,
+        newDate: String?,
+        newTime: String?
+    )
 }
