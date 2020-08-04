@@ -18,13 +18,13 @@
             android:gravity="start"
             android:padding="10dp"
             android:hint="@string/title_hint"
-            android:textColor="@color/black"
+            android:textColor="@color/app_base_color"
             android:textSize="21sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/textColorGray"
+            android:background="@color/app_base_color"
             android:padding="10dp" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -35,7 +35,7 @@
             android:gravity="start"
             android:padding="10dp"
             android:hint="@string/message_hint"
-            android:textColor="@color/black"
+            android:textColor="@color/app_base_color"
             android:textSize="18sp" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

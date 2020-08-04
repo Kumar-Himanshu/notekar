@@ -11,6 +11,7 @@ import com.notekar.abstracted.AbstractNoteFragment
 import com.notekar.adapter.ListNoteAdapter
 import com.notekar.database.AppDataBase
 import com.notekar.database.TextMessage
+import com.notekar.interfaces.IOnBackPressed
 import com.notekar.utils.Utility
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,6 +43,15 @@ class AddNoteFragment : AbstractNoteFragment() {
 
     override fun getScreenTitle(): Int {
         return R.string.second_fragment_label
+    }
+
+    override fun onBackPressedClicked(): Boolean {
+        return if (!TextUtils.isEmpty(tvBody.text.toString())) {
+            addData()
+            true
+        }else{
+            false
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

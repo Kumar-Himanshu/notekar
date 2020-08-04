@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.notekar.adapter.ListNoteAdapter
 import com.notekar.database.AppDataBase
 import com.notekar.database.TextMessage
+import com.notekar.interfaces.IOnBackPressed
 import com.notekar.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,7 +27,7 @@ import io.reactivex.schedulers.Schedulers.io
  * Copyright (c) 2020 USTech Solutions. All rights reserved.
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ListFragment : Fragment(), ListNoteAdapter.onRowClick {
+class ListFragment : Fragment(), ListNoteAdapter.onRowClick,IOnBackPressed {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mListNotes: RecyclerView
     private lateinit var adapter: ListNoteAdapter
@@ -102,5 +103,9 @@ class ListFragment : Fragment(), ListNoteAdapter.onRowClick {
         ).observeOn(AndroidSchedulers.mainThread()).subscribe {
             fetchData()
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+        return false
     }
 }

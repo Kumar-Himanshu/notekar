@@ -6,39 +6,39 @@
         android:id="@+id/action_save"
         android:orderInCategory="10"
         android:title="@string/action_submit"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_save"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_delete"
         android:orderInCategory="10"
         android:title="@string/action_delete"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_action_delete"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_cancel"
         android:orderInCategory="10"
         android:title="@string/action_cancel"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:icon="@drawable/ic_action_clear"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_share"
         android:orderInCategory="10"
         android:title="@string/action_share"
-        android:icon="@android:drawable/ic_menu_share"
-        app:showAsAction="ifRoom">
-        <menu>
-            <group
-                android:id="@+id/text_color_group"
-                android:checkableBehavior="single">
-                <item
-                    android:id="@+id/action_text"
-                    android:title="@string/action_text"
-                    />
-                <item
-                    android:id="@+id/action_image"
-                    android:title="@string/action_image"
-                    />
-            </group>
-        </menu>
+        android:icon="@drawable/ic_action_share"
+        app:showAsAction="always">
+<!--        <menu>-->
+<!--            <group-->
+<!--                android:id="@+id/text_color_group"-->
+<!--                android:checkableBehavior="single">-->
+<!--                <item-->
+<!--                    android:id="@+id/action_text"-->
+<!--                    android:title="@string/action_text"-->
+<!--                    />-->
+<!--                <item-->
+<!--                    android:id="@+id/action_image"-->
+<!--                    android:title="@string/action_image"-->
+<!--                    />-->
+<!--            </group>-->
+<!--        </menu>-->
     </item>
 </menu>

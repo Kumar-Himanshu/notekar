@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.notekar.R
+import com.notekar.R.color.app_base_color
+import com.notekar.interfaces.IOnBackPressed
 import kotlinx.android.synthetic.main.abstract_base_fragment.*
 
 
@@ -15,12 +17,13 @@ import kotlinx.android.synthetic.main.abstract_base_fragment.*
  * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
  * Copyright (c) 2020 USTech Solutions. All rights reserved.
  */
-abstract class AbstractNoteFragment : Fragment() {
+abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
 
     abstract fun saveData()
     abstract fun deleteData()
     abstract fun cancelData()
     abstract fun getScreenTitle(): Int
+    abstract fun onBackPressedClicked(): Boolean
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +37,7 @@ abstract class AbstractNoteFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         requireActivity().setTitle(getScreenTitle())
+        requireActivity().titleColor = resources.getColor(app_base_color)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -50,7 +54,7 @@ abstract class AbstractNoteFragment : Fragment() {
                 saveData()
                 true
             }
-            R.id.action_text -> {
+            R.id.action_share -> {
                 shareViaText()
                 true
             }
@@ -68,5 +72,9 @@ abstract class AbstractNoteFragment : Fragment() {
         sendIntent.type = "text/plain"
         Intent.createChooser(sendIntent, "Share via")
         startActivity(sendIntent)
+    }
+
+    override fun onBackPressed(): Boolean {
+        return onBackPressedClicked()
     }
 }

@@ -48,6 +48,15 @@ class EditNoteFragment : AbstractNoteFragment() {
         return R.string.third_fragment_label
     }
 
+    override fun onBackPressedClicked(): Boolean {
+        return if (!TextUtils.isEmpty(tvBody.text.toString())) {
+            updateData()
+            true
+        }else{
+            false
+        }
+    }
+
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_delete).isVisible = true
