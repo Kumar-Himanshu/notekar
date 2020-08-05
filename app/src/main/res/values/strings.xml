@@ -25,4 +25,6 @@
     <string name="date_hint">Date</string>
     <string name="time_hint">Time</string>
     <string name="message_hint">Enter your message Here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

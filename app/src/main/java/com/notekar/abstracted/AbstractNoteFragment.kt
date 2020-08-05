@@ -1,16 +1,26 @@
 package com.notekar.abstracted
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.notekar.R
 import com.notekar.R.color.app_base_color
 import com.notekar.interfaces.IOnBackPressed
 import kotlinx.android.synthetic.main.abstract_base_fragment.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 /**
@@ -24,6 +34,10 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     abstract fun cancelData()
     abstract fun getScreenTitle(): Int
     abstract fun onBackPressedClicked(): Boolean
+    abstract fun sharePicture()
+
+    private lateinit var content: CoordinatorLayout
+    private lateinit var baseView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +46,10 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.abstract_base_fragment, container, false)
     }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        content = view.findViewById<CoordinatorLayout>(R.id.content)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -54,13 +71,17 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
                 saveData()
                 true
             }
-            R.id.action_share -> {
+            R.id.action_text -> {
                 shareViaText()
                 true
             }
             R.id.action_image -> {
+                sharePicture()
                 true
             }
+//            R.id.action_image -> {
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -74,6 +95,11 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
         startActivity(sendIntent)
     }
 
+    open fun takeScreenshot(): Bitmap? {
+        baseView = content.rootView
+        baseView.isDrawingCacheEnabled = true
+        return baseView.drawingCache
+    }
     override fun onBackPressed(): Boolean {
         return onBackPressedClicked()
     }

@@ -26,19 +26,19 @@
         android:title="@string/action_share"
         android:icon="@drawable/ic_action_share"
         app:showAsAction="always">
-<!--        <menu>-->
-<!--            <group-->
-<!--                android:id="@+id/text_color_group"-->
-<!--                android:checkableBehavior="single">-->
-<!--                <item-->
-<!--                    android:id="@+id/action_text"-->
-<!--                    android:title="@string/action_text"-->
-<!--                    />-->
-<!--                <item-->
-<!--                    android:id="@+id/action_image"-->
-<!--                    android:title="@string/action_image"-->
-<!--                    />-->
-<!--            </group>-->
-<!--        </menu>-->
+        <menu>
+            <group
+                android:id="@+id/text_color_group"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_text"
+                    android:title="@string/action_text"
+                    />
+                <item
+                    android:id="@+id/action_image"
+                    android:title="@string/action_image"
+                    />
+            </group>
+        </menu>
     </item>
 </menu>

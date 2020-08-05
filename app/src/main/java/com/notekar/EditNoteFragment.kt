@@ -57,6 +57,11 @@ class EditNoteFragment : AbstractNoteFragment() {
         }
     }
 
+    override fun sharePicture() {
+        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
+        findNavController().navigate(action)
+    }
+
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_delete).isVisible = true
