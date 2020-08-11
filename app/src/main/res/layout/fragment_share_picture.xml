@@ -3,14 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SharePictureFragment">
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="3dp"
+        android:background="@color/app_base_color"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
     <!-- TODO: Update blank fragment layout -->
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher_foreground"
-        android:scaleType="fitXY" />
+        android:scaleType="fitStart" />
+    </androidx.cardview.widget.CardView>
 </FrameLayout>
