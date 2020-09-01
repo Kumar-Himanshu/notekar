@@ -14,6 +14,9 @@ interface TextMessageDao {
     @Query("SELECT * FROM " + Constants.tableName)
     fun getAll(): List<TextMessage>
 
+    @Query("SELECT * FROM "+Constants.tableName + " ORDER BY " + Constants.date +  " ASC ")
+    fun getAllOrderBy(): List<TextMessage>
+
     // add data into db
     @Insert
     fun insertAll(vararg users: TextMessage)

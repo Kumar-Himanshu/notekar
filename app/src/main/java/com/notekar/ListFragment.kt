@@ -62,7 +62,7 @@ class ListFragment : Fragment(), ListNoteAdapter.onRowClick,IOnBackPressed {
     @SuppressLint("CheckResult")
     private fun fetchData() {
         Observable.fromCallable {
-            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().getAll()
+            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().getAllOrderBy()
         }.subscribeOn(
             io()
         ).observeOn(AndroidSchedulers.mainThread()).subscribe {
