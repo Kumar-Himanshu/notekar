@@ -1,5 +1,7 @@
 package com.notekar.utils
 
+import android.content.Context
+import android.content.pm.PackageManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,5 +18,19 @@ object Utility {
     fun getCurrentTime():String{
         return SimpleDateFormat("hh-mm-ss", Locale.getDefault()).format(Date())
     }
+    /**
+     * To fetch App version
+     */
+    fun getAppVersion(context: Context): String? {
+        var version: String? = null
+        try {
+            version =
+                context.packageManager.getPackageInfo(context.packageName, 0).versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            CustomLog.e("Exception", "app version exception", e)
+        }
+        return version
+    }
+
 
 }

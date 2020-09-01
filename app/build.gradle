@@ -29,9 +29,25 @@ android {
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled true
+            buildConfigField('boolean', 'IS_LOG_ENABLE', 'false')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        live{
+            debuggable true
+            minifyEnabled true
+            buildConfigField('boolean', 'IS_LOG_ENABLE', 'true')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField('boolean', 'IS_LOG_ENABLE', 'true')
+            debuggable true
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
