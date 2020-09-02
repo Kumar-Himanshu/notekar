@@ -58,10 +58,10 @@ class SharePictureFragment : Fragment(), IOnBackPressed {
     }
 
     private fun initUI() {
-        imageView.post(Runnable {
-            bitmap = textAsBitmap(args.bitmap, 100.0f, resources.getColor(R.color.app_base_color),imageView)!!
-            imageView.setImageBitmap(bitmap)
-        })
+//        imageView.post(Runnable {
+//            bitmap = textAsBitmap(args.bitmap, 100.0f, resources.getColor(R.color.app_base_color),imageView)!!
+            imageView.setImageBitmap(args.bitmap)
+//        })
 //        imageView.setImageBitmap(bitmap)
     }
 

@@ -94,6 +94,13 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
         Intent.createChooser(sendIntent, "Share via")
         startActivity(sendIntent)
     }
+    fun shareAsImage(imagePath: Uri) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        sharingIntent.type = "image/*"
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath)
+        startActivity(Intent.createChooser(sharingIntent, "Share via"))
+    }
 
     open fun takeScreenshot(): Bitmap? {
         baseView = content.rootView

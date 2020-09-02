@@ -49,14 +49,24 @@ class AddNoteFragment : AbstractNoteFragment() {
         return if (!TextUtils.isEmpty(tvBody.text.toString())) {
             addData()
             true
-        }else{
+        } else {
             false
         }
     }
 
     override fun sharePicture() {
-        val action = AddNoteFragmentDirections.actionSecondFragmentToFourthFragment(tvBody.text.toString())
-        findNavController().navigate(action)
+        if (!TextUtils.isEmpty(tvBody.text.toString())) {
+
+            val action = AddNoteFragmentDirections.actionSecondFragmentToFourthFragment(
+                TextMessage(
+                    title = tvTitle.text.toString(),
+                    body = tvBody.text.toString(),
+                    date = Utility.getCurrentDate(),
+                    time = Utility.getCurrentTime()
+                )
+            )
+            findNavController().navigate(action)
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

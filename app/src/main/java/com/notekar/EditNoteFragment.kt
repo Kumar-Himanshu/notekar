@@ -1,6 +1,7 @@
 package com.notekar
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
@@ -58,7 +59,8 @@ class EditNoteFragment : AbstractNoteFragment() {
     }
 
     override fun sharePicture() {
-        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
+//        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
+        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(args.notes)
         findNavController().navigate(action)
     }
 
