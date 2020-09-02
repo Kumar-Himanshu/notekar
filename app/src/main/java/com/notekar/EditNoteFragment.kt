@@ -59,9 +59,12 @@ class EditNoteFragment : AbstractNoteFragment() {
     }
 
     override fun sharePicture() {
-//        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
-        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(args.notes)
-        findNavController().navigate(action)
+        screenLayout.isDrawingCacheEnabled = true
+        val bitmap = screenLayout.drawingCache
+        shareAsImage(saveBitmap(bitmap))
+////        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
+//        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(args.notes)
+//        findNavController().navigate(action)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

@@ -18,6 +18,10 @@ object Utility {
     fun getCurrentTime():String{
         return SimpleDateFormat("hh-mm-ss", Locale.getDefault()).format(Date())
     }
+
+    fun getExternalStoragePath(context:Context): String{
+        return Constants.EXTERNAL_STORAGE_PATH + context.packageName + "/.docs"
+    }
     /**
      * To fetch App version
      */

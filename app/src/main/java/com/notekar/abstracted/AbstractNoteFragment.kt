@@ -2,20 +2,23 @@ package com.notekar.abstracted
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ShareCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.notekar.R
 import com.notekar.R.color.app_base_color
 import com.notekar.interfaces.IOnBackPressed
+import com.notekar.utils.CustomLog
+import com.notekar.utils.Utility
 import kotlinx.android.synthetic.main.abstract_base_fragment.*
 import java.io.File
 import java.io.FileNotFoundException
@@ -37,7 +40,6 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     abstract fun sharePicture()
 
     private lateinit var content: CoordinatorLayout
-    private lateinit var baseView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +50,7 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        content = view.findViewById<CoordinatorLayout>(R.id.content)
+        content = view.findViewById(R.id.content)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,19 +97,49 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
         startActivity(sendIntent)
     }
     fun shareAsImage(imagePath: Uri) {
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        sharingIntent.type = "image/*"
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, imagePath)
-        startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        CustomLog.i("uri",imagePath.toString())
+        val sharingIntent = ShareCompat.IntentBuilder.from(requireActivity())
+            .setType("image/png")
+            .setStream(imagePath)
+            .intent
+            .setData(imagePath)
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        if (sharingIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(sharingIntent)
+        }
     }
 
-    open fun takeScreenshot(): Bitmap? {
-        baseView = content.rootView
-        baseView.isDrawingCacheEnabled = true
-        return baseView.drawingCache
-    }
     override fun onBackPressed(): Boolean {
         return onBackPressedClicked()
     }
+    open fun saveBitmap(bitmap: Bitmap): Uri {
+        val imageName = Utility.getCurrentDate() + "_" + Utility.getCurrentTime()
+        val storageDirectory = File(Utility.getExternalStoragePath(requireContext()))
+        if (!storageDirectory.exists()){
+            storageDirectory.mkdirs()
+        }
+        val imagePath =
+            File(storageDirectory, "$imageName.png")
+        val fos: FileOutputStream
+        try {
+            fos = FileOutputStream(imagePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            fos.flush()
+            fos.close()
+        } catch (e: FileNotFoundException) {
+            Log.e("SharePictureFragment", e.localizedMessage, e)
+        } catch (e: IOException) {
+            Log.e("SharePictureFragment", e.localizedMessage, e)
+        }
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            FileProvider.getUriForFile( requireContext(),
+                requireContext().packageName + ".provider",
+                imagePath)
+
+        } else{
+            Uri.fromFile(File(imagePath.absolutePath + imagePath.name))
+        }
+    }
+
+
 }

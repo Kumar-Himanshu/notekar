@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
             resources.getColor(R.color.black),
             PorterDuff.Mode.SRC_ATOP
         )
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -33,7 +31,13 @@ class MainActivity : AppCompatActivity() {
             this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
         val currentFragment =
             fragment?.childFragmentManager?.fragments?.get(0) as? IOnBackPressed
-        currentFragment ?. onBackPressed ()?.takeIf { !it }
-                ?.let { super.onBackPressed() }
+        currentFragment?.onBackPressed()?.takeIf { !it }
+            ?.let {
+                if (currentFragment is ListFragment) {
+                    finish()
+                } else {
+                    super.onBackPressed()
+                }
+            }
     }
 }

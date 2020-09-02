@@ -56,16 +56,9 @@ class AddNoteFragment : AbstractNoteFragment() {
 
     override fun sharePicture() {
         if (!TextUtils.isEmpty(tvBody.text.toString())) {
-
-            val action = AddNoteFragmentDirections.actionSecondFragmentToFourthFragment(
-                TextMessage(
-                    title = tvTitle.text.toString(),
-                    body = tvBody.text.toString(),
-                    date = Utility.getCurrentDate(),
-                    time = Utility.getCurrentTime()
-                )
-            )
-            findNavController().navigate(action)
+            screenLayout.isDrawingCacheEnabled = true
+            val bitmap = screenLayout.drawingCache
+            shareAsImage(saveBitmap(bitmap))
         }
     }
 

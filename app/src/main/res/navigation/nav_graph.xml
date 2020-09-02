@@ -26,9 +26,6 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_FourthFragment"
-            app:destination="@id/FourthFragment" />
     </fragment>
     <fragment
         android:id="@+id/ThirdFragment"
@@ -38,43 +35,8 @@
         <action
             android:id="@+id/action_ThirdFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
-
-        <action
-            android:id="@+id/action_ThirdFragment_to_FourthFragment"
-            app:destination="@id/FourthFragment" />
         <argument
             android:name="notes"
             app:argType="com.notekar.database.TextMessage" />
     </fragment>
-    <fragment
-        android:id="@+id/FifthFragment"
-        android:name="com.notekar.SharePictureFragment"
-        android:label="@string/action_share">
-
-        <action
-            android:id="@+id/action_FifthFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FifthFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment" />
-        <argument
-            android:name="bitmap"
-            app:argType="android.graphics.Bitmap" />
-    </fragment>
-    <fragment
-        android:id="@+id/FourthFragment"
-        android:name="com.notekar.SharedPictureFragment"
-        android:label="@string/action_share">
-
-        <action
-            android:id="@+id/action_FourthFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FourthFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment" />
-        <argument
-            android:name="data"
-            app:argType="com.notekar.database.TextMessage" />
-    </fragment>
-
 </navigation>
