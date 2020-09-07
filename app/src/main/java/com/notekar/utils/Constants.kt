@@ -4,7 +4,7 @@ import android.os.Environment
 
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
  * Copyright (c) 2020 USTech Solutions. All rights reserved.
  */
 object Constants {
