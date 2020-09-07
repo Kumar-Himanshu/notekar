@@ -3,16 +3,13 @@ package com.notekar.abstracted
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ShareCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.notekar.R
 import com.notekar.R.color.app_base_color
@@ -20,10 +17,6 @@ import com.notekar.interfaces.IOnBackPressed
 import com.notekar.utils.CustomLog
 import com.notekar.utils.Utility
 import kotlinx.android.synthetic.main.abstract_base_fragment.*
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 /**
@@ -113,32 +106,12 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
         return onBackPressedClicked()
     }
     open fun saveBitmap(bitmap: Bitmap): Uri {
-        val imageName = Utility.getCurrentDate() + "_" + Utility.getCurrentTime()
-        val storageDirectory = File(Utility.getExternalStoragePath(requireContext()))
-        if (!storageDirectory.exists()){
-            storageDirectory.mkdirs()
-        }
-        val imagePath =
-            File(storageDirectory, "$imageName.png")
-        val fos: FileOutputStream
-        try {
-            fos = FileOutputStream(imagePath)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            fos.flush()
-            fos.close()
-        } catch (e: FileNotFoundException) {
-            Log.e("SharePictureFragment", e.localizedMessage, e)
-        } catch (e: IOException) {
-            Log.e("SharePictureFragment", e.localizedMessage, e)
-        }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            FileProvider.getUriForFile( requireContext(),
-                requireContext().packageName + ".provider",
-                imagePath)
-
-        } else{
-            Uri.fromFile(File(imagePath.absolutePath + imagePath.name))
-        }
+        val imageName = "${Utility.getCurrentDate() + "_" + Utility.getCurrentTime()}.jpg"
+        val mimeType = "image/jpeg"
+        val compressFormat = Bitmap.CompressFormat.JPEG
+        return Utility.addBitmapToAlbum(bitmap, imageName, mimeType, compressFormat,
+            requireContext(),
+            requireActivity().contentResolver)
     }
 
 
