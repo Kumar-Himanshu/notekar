@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.notekar.R
 import com.notekar.R.color.app_base_color
@@ -91,14 +90,16 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     }
     fun shareAsImage(imagePath: Uri) {
         CustomLog.i("uri",imagePath.toString())
-        val sharingIntent = ShareCompat.IntentBuilder.from(requireActivity())
-            .setType("image/png")
-            .setStream(imagePath)
-            .intent
-            .setData(imagePath)
-            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        if (sharingIntent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(sharingIntent)
+        val shareIntent =  Intent(Intent.ACTION_SEND)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imagePath)
+
+        try {
+            startActivity(shareIntent)
+        }
+        catch (exception : android.content.ActivityNotFoundException) {
+            CustomLog.i("error","app not installed")
         }
     }
 

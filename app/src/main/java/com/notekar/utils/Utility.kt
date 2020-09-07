@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,7 +44,7 @@ object Utility {
     }
 
     /**
-     * Use this method to save file in device storage using Scoped storage architecture
+     * Use this method to save file in device storage using Scoped storage architecture and return uri of that file
      */
     fun addBitmapToAlbum(bitmap: Bitmap, displayName: String, mimeType: String, compressFormat: Bitmap.CompressFormat, context: Context,contentResolver: ContentResolver): Uri {
         val values = ContentValues()
