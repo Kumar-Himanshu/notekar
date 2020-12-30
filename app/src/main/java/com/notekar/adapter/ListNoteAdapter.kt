@@ -14,7 +14,7 @@ import com.notekar.database.TextMessage
 
 /**
  * Created by Kumar Himanshu(himanshubit@gmail.com) on 14-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Copyright (c) 2020. All rights reserved.
  */
 class ListNoteAdapter(
     private var listNote: List<TextMessage>,

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 
 /**
  * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Copyright (c) 2020. All rights reserved.
  */
 @Database(entities = [TextMessage::class], version = 1)
 abstract class AppDataBase:RoomDatabase() {

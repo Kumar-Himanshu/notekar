@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.abstract_base_fragment.*
 
 /**
  * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Copyright (c) 2020. All rights reserved.
  * A simple [Fragment] subclass as the third destination in the navigation.
  */
 class EditNoteFragment : AbstractNoteFragment() {
