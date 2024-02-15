@@ -5,8 +5,8 @@ import com.notekar.utils.Constants
 
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
+ * Copyright (c) 2020. All rights reserved.
  */
 @Dao
 interface TextMessageDao {
@@ -14,7 +14,7 @@ interface TextMessageDao {
     @Query("SELECT * FROM " + Constants.tableName)
     fun getAll(): List<TextMessage>
 
-    @Query("SELECT * FROM "+Constants.tableName + " ORDER BY " + Constants.date +  " ASC ")
+    @Query("SELECT * FROM "+Constants.tableName + " ORDER BY " + Constants.date +  " DESC ")
     fun getAllOrderBy(): List<TextMessage>
 
     // add data into db

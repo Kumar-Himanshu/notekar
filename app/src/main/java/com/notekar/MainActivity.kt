@@ -5,16 +5,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import androidx.navigation.fragment.NavHostFragment
+import com.notekar.databinding.ActivityMainBinding
 import com.notekar.interfaces.IOnBackPressed
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-        toolbar.overflowIcon!!.setColorFilter(
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.overflowIcon!!.setColorFilter(
             resources.getColor(R.color.black),
             PorterDuff.Mode.SRC_ATOP
         )

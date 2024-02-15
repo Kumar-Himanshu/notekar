@@ -13,24 +13,26 @@ import androidx.navigation.fragment.navArgs
 import com.notekar.abstracted.AbstractNoteFragment
 import com.notekar.database.AppDataBase
 import com.notekar.database.TextMessage
+import com.notekar.databinding.AbstractBaseFragmentBinding
 import com.notekar.utils.Utility
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.abstract_base_fragment.*
 
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
+ * Copyright (c) 2020. All rights reserved.
  * A simple [Fragment] subclass as the third destination in the navigation.
  */
 class EditNoteFragment : AbstractNoteFragment() {
     private lateinit var mCreatedDate: String
     private lateinit var mCreatedTime: String
     private val args: EditNoteFragmentArgs by navArgs()
+    private var _binding: AbstractBaseFragmentBinding? = null
+
     override fun saveData() {
-        if (TextUtils.isEmpty(tvBody.text.toString())) {
+        if (TextUtils.isEmpty(binding.tvBody.text.toString())) {
             Toast.makeText(activity, "Please enter message", Toast.LENGTH_SHORT).show()
         } else {
             updateData()
@@ -50,7 +52,7 @@ class EditNoteFragment : AbstractNoteFragment() {
     }
 
     override fun onBackPressedClicked(): Boolean {
-        return if (!TextUtils.isEmpty(tvBody.text.toString())) {
+        return if (!TextUtils.isEmpty(binding.tvBody.text.toString())) {
             updateData()
             true
         }else{
@@ -59,13 +61,14 @@ class EditNoteFragment : AbstractNoteFragment() {
     }
 
     override fun sharePicture() {
-        screenLayout.isDrawingCacheEnabled = true
-        val bitmap = screenLayout.drawingCache
+        binding.screenLayout.isDrawingCacheEnabled = true
+        val bitmap = binding.screenLayout.drawingCache
         shareAsImage(saveBitmap(bitmap))
 ////        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(tvBody.text.toString())
 //        val action = EditNoteFragmentDirections.actionThirdFragmentToFourthFragment(args.notes)
 //        findNavController().navigate(action)
     }
+
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
@@ -76,7 +79,7 @@ class EditNoteFragment : AbstractNoteFragment() {
     @SuppressLint("CheckResult")
     private fun updateData() {
         Observable.fromCallable {
-            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().updateSingleData(tvTitle.text.toString(),tvBody.text.toString(),mCreatedDate,mCreatedTime,Utility.getCurrentDate(),Utility.getCurrentTime())
+            AppDataBase.getAppDataBase(requireContext())!!.getTextMessageDao().updateSingleData(binding.tvTitle.text.toString(),binding.tvBody.text.toString(),mCreatedDate,mCreatedTime,Utility.getCurrentDate(),Utility.getCurrentTime())
         }.subscribeOn(
             Schedulers.io()
         ).observeOn(AndroidSchedulers.mainThread()).subscribe {
@@ -100,8 +103,8 @@ class EditNoteFragment : AbstractNoteFragment() {
     }
 
     private fun initUI(note: TextMessage) {
-        tvTitle.setText(note.title)
-        tvBody.setText(note.body)
+        binding.tvTitle.setText(note.title)
+        binding.tvBody.setText(note.body)
         mCreatedDate = note.date!!
         mCreatedTime = note.time!!
     }

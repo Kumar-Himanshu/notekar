@@ -12,15 +12,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.notekar.R
 import com.notekar.R.color.app_base_color
+import com.notekar.databinding.AbstractBaseFragmentBinding
 import com.notekar.interfaces.IOnBackPressed
 import com.notekar.utils.CustomLog
 import com.notekar.utils.Utility
-import kotlinx.android.synthetic.main.abstract_base_fragment.*
 
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
+ * Copyright (c) 2020. All rights reserved.
  */
 abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
 
@@ -32,13 +32,16 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     abstract fun sharePicture()
 
     private lateinit var content: CoordinatorLayout
-
+    private var _binding: AbstractBaseFragmentBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.abstract_base_fragment, container, false)
+        _binding = AbstractBaseFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,7 +86,7 @@ abstract class AbstractNoteFragment : Fragment(),IOnBackPressed {
     private fun shareViaText() {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(Intent.EXTRA_TEXT, tvBody.text.toString())
+        sendIntent.putExtra(Intent.EXTRA_TEXT, binding.tvBody.text.toString())
         sendIntent.type = "text/plain"
         Intent.createChooser(sendIntent, "Share via")
         startActivity(sendIntent)

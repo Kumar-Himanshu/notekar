@@ -1,38 +1,52 @@
 package com.notekar
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.notekar.databinding.ActivitySplashBinding
 import com.notekar.utils.CustomLog
 import com.notekar.utils.Utility
-import kotlinx.android.synthetic.main.activity_splash.*
 
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 04-08-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 04-08-2020.
+ * Copyright (c) 2020. All rights reserved.
  */
 class SplashActivity : AppCompatActivity() {
     private val SPLASHTIMEOUT: Long = 3000 // 1 sec
     private val PERMISSIONS_WRITE_EXTERNAL_STORAGE = 101
+    private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-        versionTv.text =
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        binding.versionTv.text =
             String.format(getString(R.string.version), Utility.getAppVersion(this@SplashActivity))
-        requestPermissions()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if(!Environment.isExternalStorageManager()) {
+                val uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                startActivity(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri))
+            }else{
+                openActivity()
+            }
+        }else{
+            requestPermissions()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSIONS_WRITE_EXTERNAL_STORAGE -> {
 

@@ -23,8 +23,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.io
 
 /**
- * Created by Kumar Himanshu(KHimanshu@ustechsolutions.com) on 13-07-2020.
- * Copyright (c) 2020 USTech Solutions. All rights reserved.
+ * Created by Kumar Himanshu(himanshubit@gmail.com) on 13-07-2020.
+ * Copyright (c) 2020. All rights reserved.
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class ListFragment : Fragment(), ListNoteAdapter.onRowClick,IOnBackPressed {
